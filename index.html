@@ -1,1 +1,33 @@
-hola 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Pac-Man</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="game-container">
+        <header>
+            <h1 style="margin-right: 20px;">NEON PAC-MAN</h1>
+            <div class="score-board">
+                <span style="margin-right: 15px;">LEVEL: <span id="level">1</span></span>
+                <span style="margin-right: 15px;">SCORE: <span id="score">0</span></span>
+                <span>LIVES: <span id="lives">3</span></span>
+            </div>
+        </header>
+        <canvas id="gameCanvas"></canvas>
+        <div id="game-overlay" class="hidden">
+            <h2 id="overlay-title">GAME OVER</h2>
+            <p>Press SPACE to Restart</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
