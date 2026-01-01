@@ -273,7 +273,34 @@ class Game {
             }
         });
 
-        // Mobile Controls
+        // Mobile Control Selection Logic
+        if (window.innerWidth <= 768) {
+            // Show selection modal
+            const selectionModal = document.getElementById('mobile-control-select');
+            selectionModal.classList.remove('hidden');
+
+            // Allow time for everything to init, then pause game logic until selection
+            this.isGameOver = true; // Temporary pause
+
+            document.getElementById('select-buttons').addEventListener('click', () => {
+                selectionModal.classList.add('hidden');
+                document.querySelector('.mobile-controls').classList.add('active');
+                this.initMobileButtons();
+                this.isGameOver = false; // Resume
+                this.startBackgroundMusic();
+            });
+
+            document.getElementById('select-swipe').addEventListener('click', () => {
+                selectionModal.classList.add('hidden');
+                this.initSwipeControls();
+                this.isGameOver = false; // Resume
+                this.startBackgroundMusic();
+            });
+        }
+    }
+
+    initMobileButtons() {
+        // Mobile Controls - Buttons
         const btnUp = document.getElementById('btn-up');
         const btnDown = document.getElementById('btn-down');
         const btnLeft = document.getElementById('btn-left');
@@ -285,11 +312,10 @@ class Game {
             }
         };
 
-        // Use touchstart for better responsiveness on mobile, fall back to click
         const addBtnListener = (btn, dir) => {
             if (!btn) return;
             btn.addEventListener('touchstart', (e) => {
-                e.preventDefault(); // Prevent scrolling/zooming
+                e.preventDefault();
                 handleMobileInput(dir);
             }, { passive: false });
 
@@ -302,6 +328,50 @@ class Game {
         addBtnListener(btnDown, { x: 0, y: 1 });
         addBtnListener(btnLeft, { x: -1, y: 0 });
         addBtnListener(btnRight, { x: 1, y: 0 });
+    }
+
+    initSwipeControls() {
+        let touchStartX = 0;
+        let touchStartY = 0;
+        const sensitivity = 30; // Min pixels for a swipe
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }, { passive: false });
+
+        document.addEventListener('touchmove', (e) => {
+            // Prevent default scrolling when swiping
+            e.preventDefault();
+        }, { passive: false });
+
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+
+            const diffX = touchEndX - touchStartX;
+            const diffY = touchEndY - touchStartY;
+
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                // Horizontal Swipe
+                if (Math.abs(diffX) > sensitivity) {
+                    if (diffX > 0) {
+                        this.pacman.nextDir = { x: 1, y: 0 }; // Right
+                    } else {
+                        this.pacman.nextDir = { x: -1, y: 0 }; // Left
+                    }
+                }
+            } else {
+                // Vertical Swipe
+                if (Math.abs(diffY) > sensitivity) {
+                    if (diffY > 0) {
+                        this.pacman.nextDir = { x: 0, y: 1 }; // Down
+                    } else {
+                        this.pacman.nextDir = { x: 0, y: -1 }; // Up
+                    }
+                }
+            }
+        });
     }
 
     animate(timestamp) {

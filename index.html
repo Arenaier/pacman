@@ -26,14 +26,26 @@
             <h2 id="overlay-title">GAME OVER</h2>
             <p>Press SPACE to Restart</p>
         </div>
+
+        <div id="mobile-control-select" class="hidden">
+            <h2>CHOOSE CONTROLS</h2>
+            <div class="selection-buttons">
+                <button id="select-buttons" class="menu-btn">BUTTONS</button>
+                <button id="select-swipe" class="menu-btn">SWIPE</button>
+            </div>
+        </div>
+
         <div class="mobile-controls">
             <div class="control-row">
                 <button id="btn-up" class="control-btn">▲</button>
             </div>
-            <div class="control-row">
+            <div class="pad-row">
                 <button id="btn-left" class="control-btn">◀</button>
-                <button id="btn-down" class="control-btn">▼</button>
+                <div class="pad-spacer"></div>
                 <button id="btn-right" class="control-btn">▶</button>
+            </div>
+            <div class="control-row">
+                <button id="btn-down" class="control-btn">▼</button>
             </div>
         </div>
     </div>
