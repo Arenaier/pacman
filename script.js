@@ -272,6 +272,36 @@ class Game {
                 location.reload();
             }
         });
+
+        // Mobile Controls
+        const btnUp = document.getElementById('btn-up');
+        const btnDown = document.getElementById('btn-down');
+        const btnLeft = document.getElementById('btn-left');
+        const btnRight = document.getElementById('btn-right');
+
+        const handleMobileInput = (direction) => {
+            if (this.pacman) {
+                this.pacman.nextDir = direction;
+            }
+        };
+
+        // Use touchstart for better responsiveness on mobile, fall back to click
+        const addBtnListener = (btn, dir) => {
+            if (!btn) return;
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault(); // Prevent scrolling/zooming
+                handleMobileInput(dir);
+            }, { passive: false });
+
+            btn.addEventListener('click', (e) => {
+                handleMobileInput(dir);
+            });
+        };
+
+        addBtnListener(btnUp, { x: 0, y: -1 });
+        addBtnListener(btnDown, { x: 0, y: 1 });
+        addBtnListener(btnLeft, { x: -1, y: 0 });
+        addBtnListener(btnRight, { x: 1, y: 0 });
     }
 
     animate(timestamp) {

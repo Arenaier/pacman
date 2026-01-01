@@ -109,3 +109,56 @@ canvas {
         opacity: 0.5;
     }
 }
+
+/* Mobile Controls */
+.mobile-controls {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 20;
+}
+
+.control-row {
+    display: flex;
+    gap: 20px;
+}
+
+.control-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid var(--primary-glow);
+    color: var(--primary-glow);
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--primary-glow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.1s, background 0.1s;
+}
+
+.control-btn:active {
+    transform: scale(0.9);
+    background: rgba(0, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    .mobile-controls {
+        display: flex;
+    }
+
+    #gameCanvas {
+        max-height: calc(100vh - 200px);
+        /* Make room for controls */
+    }
+}
